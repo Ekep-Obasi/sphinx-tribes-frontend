@@ -9,6 +9,7 @@ import { useStores } from 'store';
 import { useParams } from 'react-router-dom';
 import { renderMarkdown } from 'people/utils/RenderMarkdown';
 import SidebarComponent from 'components/common/SidebarComponent';
+import { useBrowserTab } from 'hooks/useBrowserTab';
 import { Phase } from '../interface';
 import ActivitiesHeader from './header';
 
@@ -307,6 +308,8 @@ const PostButton = styled(Button)`
   }
 `;
 
+const PAGE_TITLE = 'Activities';
+
 const Activities = observer(() => {
   const { uuid } = useParams<{ uuid: string }>();
   const { main, ui } = useStores();
@@ -341,6 +344,11 @@ const Activities = observer(() => {
   const [comment, setComment] = useState('');
   const [isCommentChanged, setIsCommentChanged] = useState(false);
   const [isPosting, setIsPosting] = useState(false);
+  const { setTitle } = useBrowserTab();
+
+  useEffect(() => {
+    setTitle(PAGE_TITLE);
+  }, []);
 
   let interval: NodeJS.Timeout | null = null;
 
